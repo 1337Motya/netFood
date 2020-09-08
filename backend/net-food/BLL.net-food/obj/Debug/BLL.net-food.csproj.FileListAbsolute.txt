@@ -1,0 +1,16 @@
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\BLL.net-food.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\BLL.net-food.pdb
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\AutoMapper.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\DAL.net-food.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\Ninject.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\EntityFramework.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\DAL.net-food.pdb
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\DAL.net-food.dll.config
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\AutoMapper.xml
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\Ninject.xml
+F:\netFood\netFood\backend\net-food\BLL.net-food\bin\Debug\EntityFramework.xml
+F:\netFood\netFood\backend\net-food\BLL.net-food\obj\Debug\BLL.net-food.csprojAssemblyReference.cache
+F:\netFood\netFood\backend\net-food\BLL.net-food\obj\Debug\BLL.net-food.csproj.CoreCompileInputs.cache
+F:\netFood\netFood\backend\net-food\BLL.net-food\obj\Debug\BLL.net-food.csproj.CopyComplete
+F:\netFood\netFood\backend\net-food\BLL.net-food\obj\Debug\BLL.net-food.dll
+F:\netFood\netFood\backend\net-food\BLL.net-food\obj\Debug\BLL.net-food.pdb
