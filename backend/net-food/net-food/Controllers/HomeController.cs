@@ -1,16 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using BLL.net_food.Interfaces;
+using BLL.net_food.Services;
+using DAL.net_food.Entities;
 
 namespace net_food.Controllers
 {
     public class HomeController : Controller
     {
+        IDrinkService drinks;
+
+        public HomeController(IDrinkService service)
+        {
+            drinks = service;
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var drink = drinks.Get(id);
+
+            return View(drink);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Drink drink)
+        {
+
+            drinks.Update(drink);
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Index()
         {
-            return View();
+            return View(drinks.Get());
         }
 
         public ActionResult About()
