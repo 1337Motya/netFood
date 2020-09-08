@@ -1,0 +1,12 @@
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\DAL.net-food.dll.config
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\DAL.net-food.dll
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\DAL.net-food.pdb
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\EntityFramework.dll
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\EntityFramework.SqlServer.dll
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\EntityFramework.xml
+F:\netFood\netFood\backend\net-food\DAL.net-food\bin\Debug\EntityFramework.SqlServer.xml
+F:\netFood\netFood\backend\net-food\DAL.net-food\obj\Debug\DAL.net-food.csprojAssemblyReference.cache
+F:\netFood\netFood\backend\net-food\DAL.net-food\obj\Debug\DAL.net-food.csproj.CoreCompileInputs.cache
+F:\netFood\netFood\backend\net-food\DAL.net-food\obj\Debug\DAL.net-food.csproj.CopyComplete
+F:\netFood\netFood\backend\net-food\DAL.net-food\obj\Debug\DAL.net-food.dll
+F:\netFood\netFood\backend\net-food\DAL.net-food\obj\Debug\DAL.net-food.pdb
