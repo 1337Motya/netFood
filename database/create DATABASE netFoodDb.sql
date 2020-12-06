@@ -1,73 +1,113 @@
-use netFoodDb;
+USE [master]
+GO
 
-create table Admins (
-	Id smallint primary key NOT NULL, 
-	[Login] nvarchar(25) NOT NULL,
-	[Password] nvarchar(max) not null,
-);
+/****** Object:  Database [netFoodDb]    Script Date: 07.12.2020 0:10:26 ******/
+CREATE DATABASE [netFoodDb]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'netFoodDb', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\netFoodDb.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'netFoodDb_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\netFoodDb_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
 
-create table Orders (
-	order_id smallint primary key not null,
-	[order] nvarchar(max) not null,
-	[address] nvarchar(50) not null,
-	[phoneNumber] nvarchar(13) not null
-);
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [netFoodDb].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
 
-create table Pizza (
-	Id smallint primary key not null,
-	[Name] nvarchar(50) not null,
-	[Description] nvarchar(300),
-	Ingredients nvarchar(150) not null,
-	ImageUrl nvarchar(max),
-);
+ALTER DATABASE [netFoodDb] SET ANSI_NULL_DEFAULT OFF 
+GO
 
-create table PizzaSizes (
-	Size_id smallint primary key not null,
-	Size smallint
-)
+ALTER DATABASE [netFoodDb] SET ANSI_NULLS OFF 
+GO
 
-create table PizzaPrice(
-	Pizza_id smallint foreign key references dbo.Pizza(id),
-	Size_id smallint foreign key references dbo.PizzaSizes(size_id),
-	Price decimal not null
-)
+ALTER DATABASE [netFoodDb] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [netFoodDb] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [netFoodDb] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [netFoodDb] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [netFoodDb] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [netFoodDb] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [netFoodDb] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [netFoodDb] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [netFoodDb] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [netFoodDb] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [netFoodDb] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [netFoodDb] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [netFoodDb] SET  READ_WRITE 
+GO
 
 
-create table DoughTypes (
-	Pizza_id smallint primary key foreign key references dbo.Pizza(id),
-	Dough nvarchar(20) not null
-)
-
-create table Drinks (
-	Id smallint primary key not null,
-	[Name] nvarchar(50) not null,
-	[Description] nvarchar(300),
-	ImageUrl nvarchar(max),
-)
-
-create table DrinkVolumes (
-	Volume_id smallint primary key not null,
-	Volume smallint not null
-)
-
-
-create table DrinkPrice(
-	Drink_id smallint foreign key references dbo.Drinks(Id),
-	Volume_id smallint foreign key references dbo.DrinkVolumes(Volume_id),
-	Price decimal not null
-	primary key(Drink_id, Volume_id)
-)
-
-create table Bundles (
-	Id smallint primary key not null,
-	[Name] nvarchar(50) not null,
-	ImageUrl nvarchar(max),
-)
-
-create table BundleItems (
-	Bundle_id smallint primary key foreign key references dbo.Bundles(Id),
-	Pizza_id smallint foreign key references dbo.Pizza(id),
-	Size_id smallint foreign key references dbo.PizzaSizes(size_id),
-	Drink_id smallint foreign key references dbo.Drinks(Id),
-	Volume_id smallint foreign key references dbo.DrinkVolumes(Volume_id),
-)
