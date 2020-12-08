@@ -17,8 +17,16 @@
     font-size: 20px;
     font-weight: 900;
     letter-spacing: 1%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
+
+  &__description {
+    display: block;
+    color: gray;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
 
   &__selector {
     display: flex;
