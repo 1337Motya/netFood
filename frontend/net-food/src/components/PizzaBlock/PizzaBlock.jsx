@@ -6,16 +6,18 @@ import Button from "../Button";
 function PizzaBlock({
   id,
   name,
+  description,
   imageUrl,
-  price,
-  types,
-  sizes,
   onClickAddPizza,
   addedAmount,
+  pizzaDoughTypes,
+  pizzaSizes
 }) {
-  const availableTypes = ["тонкое", "традиционное"];
-  const availableSizes = [26, 30, 40];
-  const [activeType, setActiveType] = React.useState(types[0]);
+ 
+  const availableTypes = pizzaDoughTypes.map(types => types.doughType);
+  const availableSizes = pizzaSizes.map(sizes => sizes.size);
+  const prices = pizzaSizes.map(sizes => sizes.price);
+  const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
 
   const onSelectType = (index) => {
@@ -31,7 +33,7 @@ function PizzaBlock({
       id,
       name,
       imageUrl,
-      price,
+      price: prices[activeSize],
       size: availableSizes[activeSize],
       type: availableTypes[activeType],
     };
@@ -42,6 +44,7 @@ function PizzaBlock({
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
+      <span className="pizza-block__description">{description}</span>
       <div className="pizza-block__selector">
         <ul>
           {availableTypes.map((type, index) => (
@@ -49,8 +52,7 @@ function PizzaBlock({
               key={type}
               onClick={() => onSelectType(index)}
               className={classNames({
-                active: activeType === index,
-                disabled: !types.includes(index),
+                active: activeType === index
               })}
             >
               {type}
@@ -63,8 +65,7 @@ function PizzaBlock({
               key={size}
               onClick={() => onSelectSize(index)}
               className={classNames({
-                active: activeSize === index,
-                disabled: !sizes.includes(size),
+                active: activeSize === index
               })}
             >
               {size} см.
@@ -73,7 +74,7 @@ function PizzaBlock({
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
+        <div className="pizza-block__price">{prices[activeSize]} б.р</div>
         <Button onClick={onAddPizza} className="button--add" outline>
           <svg
             width="12"
