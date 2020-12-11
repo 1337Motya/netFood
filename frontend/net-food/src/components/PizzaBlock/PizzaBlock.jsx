@@ -6,14 +6,16 @@ import Button from "../Button";
 function PizzaBlock({
   id,
   name,
+  categoryId,
   description,
   imageUrl,
   onClickAddPizza,
   addedAmount,
+  price,
   pizzaDoughTypes,
   pizzaSizes
 }) {
- 
+
   const availableTypes = pizzaDoughTypes.map(types => types.doughType);
   const availableSizes = pizzaSizes.map(sizes => sizes.size);
   const prices = pizzaSizes.map(sizes => sizes.price);
@@ -32,49 +34,56 @@ function PizzaBlock({
     const obj = {
       id,
       name,
+      categoryId,
       imageUrl,
-      price: prices[activeSize],
+      price: price !== 0 ? price : prices[activeSize],
       size: availableSizes[activeSize],
       type: availableTypes[activeType],
     };
     onClickAddPizza(obj);
   };
 
+  function pizzaBlockSelector() {
+    if (pizzaDoughTypes.length !== 0 && pizzaSizes.length !== 0) {
+      return <div className="pizza-block__selector">
+      <ul>
+        {availableTypes.map((type, index) => (
+          <li
+            key={type}
+            onClick={() => onSelectType(index)}
+            className={classNames({
+              active: activeType === index
+            })}
+          >
+            {type}
+          </li>
+        ))}
+      </ul>
+      <ul>
+        {availableSizes.map((size, index) => (
+          <li
+            key={size}
+            onClick={() => onSelectSize(index)}
+            className={classNames({
+              active: activeSize === index
+            })}
+          >
+            {size} см.
+          </li>
+        ))}
+      </ul>
+    </div>
+    }
+  }
+
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
       <span className="pizza-block__description">{description}</span>
-      <div className="pizza-block__selector">
-        <ul>
-          {availableTypes.map((type, index) => (
-            <li
-              key={type}
-              onClick={() => onSelectType(index)}
-              className={classNames({
-                active: activeType === index
-              })}
-            >
-              {type}
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {availableSizes.map((size, index) => (
-            <li
-              key={size}
-              onClick={() => onSelectSize(index)}
-              className={classNames({
-                active: activeSize === index
-              })}
-            >
-              {size} см.
-            </li>
-          ))}
-        </ul>
-      </div>
+      {pizzaBlockSelector()}
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{prices[activeSize]} б.р</div>
+        <div className="pizza-block__price">{price !== 0 ? price : prices[activeSize]} р.</div>
         <Button onClick={onAddPizza} className="button--add" outline>
           <svg
             width="12"
@@ -110,8 +119,8 @@ PizzaBlock.defaultProps = {
   name: "Название пиццы",
   price: 0,
   imageUrl: "",
-  types: [],
-  sizes: [],
+  pizzaDoughTypes: [],
+  pizzaSizes: [],
 };
 
 export default PizzaBlock;
