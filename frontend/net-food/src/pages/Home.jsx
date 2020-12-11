@@ -5,6 +5,8 @@ import { setCategory, setSortBy } from "../redux/actions/filters";
 import { fetchPizzas } from "../redux/actions/pizzas";
 import { addPizzaToCart } from "../redux/actions/cart";
 
+import pizzas from "../redux/reducers/pizzas";
+
 function Home() {
   const dispatch = useDispatch();
   const items = useSelector(({ pizzas }) => pizzas.items);
@@ -28,15 +30,20 @@ function Home() {
     dispatch(addPizzaToCart(obj));
   };
 
+  console.log(category);
+
+
   return (
     <div className="container">
       <div className="content__top">
         <Categories
           activeCategory={category}
           onClickCategory={onSelectCategory}
-          items={["Мясные", "Вегетринаские", "Гриль", "Острые"]}
+          items={[{ name: "Пицца", apiname: "pizzas" }, { name: "Закуски", apiname: "snacks" },
+          { name: "Десерты", apiname: "desserts" }, { name: "Напитки", apiname: "drinks" },
+          { name: "Комбо", apiname: "bundles" }]}
         />
-        <SortPopup
+        {/* <SortPopup
           onClickSort={onSelectSortType}
           sortType={sortBy.type}
           items={[
@@ -44,18 +51,21 @@ function Home() {
             { name: "цене", type: "price", order: "desc" },
             { name: "алфавиту", type: "name", order: "asc" },
           ]}
-        />
+        /> */}
       </div>
-      <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoaded
-          ? items &&
+
+        {
+          isLoaded
+            ? items &&
             items.map((obj) => (
               <PizzaBlock onClickAddPizza={addPizza} key={obj.id} addedAmount={cartItems[obj.id] && cartItems[obj.id].items.length} {...obj} />
+
             ))
-          : Array(12)
+            : Array(items.length)
               .fill(0)
-              .map((_, index) => <LoadingBlock key={index} />)}
+              .map((_, index) => <LoadingBlock key={index} />)
+        }
       </div>
     </div>
   );
