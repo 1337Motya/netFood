@@ -5,10 +5,9 @@ export const fetchPizzas = (category, sortBy) => (dispatch) => {
   dispatch(setLoaded(false));
   axios
     .get(
-      `https://localhost:44345/api/pizzas`
+      `https://localhost:44345/api/` + category
     )
     .then(({ data }) => {
-      console.log(data);
       dispatch(setPizzas(data));
     });
 };
