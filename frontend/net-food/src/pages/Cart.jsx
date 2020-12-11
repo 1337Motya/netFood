@@ -119,6 +119,7 @@ function Cart() {
                   key={obj.id}
                   id={obj.id}
                   name={obj.name}
+                  imageUrl={obj.imageUrl}
                   type={obj.type}
                   size={obj.size}
                   totalPrice={items[obj.id].totalPrice}
@@ -133,10 +134,10 @@ function Cart() {
           <div className="cart__bottom">
             <div className="cart__bottom-details">
               <span>
-                Всего пицц: <b>{totalCount} шт.</b>
+                Всего позиций: <b>{totalCount} шт.</b>
               </span>
               <span>
-                Сумма заказа: <b>{totalPrice} ₽</b>
+                Сумма заказа: <b>{totalPrice} р.</b>
               </span>
             </div>
             <div className="cart__bottom-buttons">
