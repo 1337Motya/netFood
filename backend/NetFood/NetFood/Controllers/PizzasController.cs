@@ -31,7 +31,7 @@ namespace NetFood.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pizza>> GetPizza(int id)
         {
-            var pizza = await _context.Pizzas.FindAsync(id);
+            var pizza = await _context.Pizzas.Include(p => p.PizzaDoughTypes).Include(p => p.PizzaSizes).Where(i => i.Id == id).FirstOrDefaultAsync();
 
             if (pizza == null)
             {
@@ -89,7 +89,7 @@ namespace NetFood.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Pizza>> DeletePizza(int id)
         {
-            var pizza = await _context.Pizzas.FindAsync(id);
+            var pizza = await _context.Pizzas.Include(p => p.PizzaDoughTypes).Include(p => p.PizzaSizes).Where(i => i.Id == id).FirstOrDefaultAsync();
             if (pizza == null)
             {
                 return NotFound();

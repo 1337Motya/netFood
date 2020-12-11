@@ -11,48 +11,48 @@ namespace NetFood.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaSizesController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly netFoodDbContext _context;
 
-        public PizzaSizesController(netFoodDbContext context)
+        public OrdersController(netFoodDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/PizzaSizes
+        // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaSize>>> GetPizzaSizes()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.PizzaSizes.ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
-        // GET: api/PizzaSizes/5
+        // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaSize>> GetPizzaSize(int id)
+        public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
+            var order = await _context.Orders.FindAsync(id);
 
-            if (pizzaSize == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return pizzaSize;
+            return order;
         }
 
-        // PUT: api/PizzaSizes/5
+        // PUT: api/Orders/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzaSize(int id, PizzaSize pizzaSize)
+        public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != pizzaSize.Id)
+            if (id != order.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizzaSize).State = EntityState.Modified;
+            _context.Entry(order).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NetFood.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaSizeExists(id))
+                if (!OrderExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/PizzaSizes
+        // POST: api/Orders
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PizzaSize>> PostPizzaSize(PizzaSize pizzaSize)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.PizzaSizes.Add(pizzaSize);
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaSize", new { id = pizzaSize.Id }, pizzaSize);
+            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
         }
 
-        // DELETE: api/PizzaSizes/5
+        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PizzaSize>> DeletePizzaSize(int id)
+        public async Task<ActionResult<Order>> DeleteOrder(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
-            if (pizzaSize == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            _context.PizzaSizes.Remove(pizzaSize);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
-            return pizzaSize;
+            return order;
         }
 
-        private bool PizzaSizeExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.PizzaSizes.Any(e => e.Id == id);
+            return _context.Orders.Any(e => e.Id == id);
         }
     }
 }

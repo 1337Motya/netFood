@@ -11,48 +11,48 @@ namespace NetFood.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaSizesController : ControllerBase
+    public class StaffsController : ControllerBase
     {
         private readonly netFoodDbContext _context;
 
-        public PizzaSizesController(netFoodDbContext context)
+        public StaffsController(netFoodDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/PizzaSizes
+        // GET: api/Staffs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaSize>>> GetPizzaSizes()
+        public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
         {
-            return await _context.PizzaSizes.ToListAsync();
+            return await _context.Staffs.ToListAsync();
         }
 
-        // GET: api/PizzaSizes/5
+        // GET: api/Staffs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaSize>> GetPizzaSize(int id)
+        public async Task<ActionResult<Staff>> GetStaff(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
+            var staff = await _context.Staffs.FindAsync(id);
 
-            if (pizzaSize == null)
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return pizzaSize;
+            return staff;
         }
 
-        // PUT: api/PizzaSizes/5
+        // PUT: api/Staffs/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzaSize(int id, PizzaSize pizzaSize)
+        public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
-            if (id != pizzaSize.Id)
+            if (id != staff.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizzaSize).State = EntityState.Modified;
+            _context.Entry(staff).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NetFood.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaSizeExists(id))
+                if (!StaffExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/PizzaSizes
+        // POST: api/Staffs
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PizzaSize>> PostPizzaSize(PizzaSize pizzaSize)
+        public async Task<ActionResult<Staff>> PostStaff(Staff staff)
         {
-            _context.PizzaSizes.Add(pizzaSize);
+            _context.Staffs.Add(staff);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaSize", new { id = pizzaSize.Id }, pizzaSize);
+            return CreatedAtAction("GetStaff", new { id = staff.Id }, staff);
         }
 
-        // DELETE: api/PizzaSizes/5
+        // DELETE: api/Staffs/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PizzaSize>> DeletePizzaSize(int id)
+        public async Task<ActionResult<Staff>> DeleteStaff(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
-            if (pizzaSize == null)
+            var staff = await _context.Staffs.FindAsync(id);
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            _context.PizzaSizes.Remove(pizzaSize);
+            _context.Staffs.Remove(staff);
             await _context.SaveChangesAsync();
 
-            return pizzaSize;
+            return staff;
         }
 
-        private bool PizzaSizeExists(int id)
+        private bool StaffExists(int id)
         {
-            return _context.PizzaSizes.Any(e => e.Id == id);
+            return _context.Staffs.Any(e => e.Id == id);
         }
     }
 }

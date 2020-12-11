@@ -11,48 +11,48 @@ namespace NetFood.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaSizesController : ControllerBase
+    public class PizzaDoughTypesController : ControllerBase
     {
         private readonly netFoodDbContext _context;
 
-        public PizzaSizesController(netFoodDbContext context)
+        public PizzaDoughTypesController(netFoodDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/PizzaSizes
+        // GET: api/PizzaDoughTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaSize>>> GetPizzaSizes()
+        public async Task<ActionResult<IEnumerable<PizzaDoughType>>> GetPizzaDoughTypes()
         {
-            return await _context.PizzaSizes.ToListAsync();
+            return await _context.PizzaDoughTypes.ToListAsync();
         }
 
-        // GET: api/PizzaSizes/5
+        // GET: api/PizzaDoughTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaSize>> GetPizzaSize(int id)
+        public async Task<ActionResult<PizzaDoughType>> GetPizzaDoughType(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
+            var pizzaDoughType = await _context.PizzaDoughTypes.FindAsync(id);
 
-            if (pizzaSize == null)
+            if (pizzaDoughType == null)
             {
                 return NotFound();
             }
 
-            return pizzaSize;
+            return pizzaDoughType;
         }
 
-        // PUT: api/PizzaSizes/5
+        // PUT: api/PizzaDoughTypes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzaSize(int id, PizzaSize pizzaSize)
+        public async Task<IActionResult> PutPizzaDoughType(int id, PizzaDoughType pizzaDoughType)
         {
-            if (id != pizzaSize.Id)
+            if (id != pizzaDoughType.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizzaSize).State = EntityState.Modified;
+            _context.Entry(pizzaDoughType).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NetFood.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaSizeExists(id))
+                if (!PizzaDoughTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/PizzaSizes
+        // POST: api/PizzaDoughTypes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PizzaSize>> PostPizzaSize(PizzaSize pizzaSize)
+        public async Task<ActionResult<PizzaDoughType>> PostPizzaDoughType(PizzaDoughType pizzaDoughType)
         {
-            _context.PizzaSizes.Add(pizzaSize);
+            _context.PizzaDoughTypes.Add(pizzaDoughType);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaSize", new { id = pizzaSize.Id }, pizzaSize);
+            return CreatedAtAction("GetPizzaDoughType", new { id = pizzaDoughType.Id }, pizzaDoughType);
         }
 
-        // DELETE: api/PizzaSizes/5
+        // DELETE: api/PizzaDoughTypes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PizzaSize>> DeletePizzaSize(int id)
+        public async Task<ActionResult<PizzaDoughType>> DeletePizzaDoughType(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
-            if (pizzaSize == null)
+            var pizzaDoughType = await _context.PizzaDoughTypes.FindAsync(id);
+            if (pizzaDoughType == null)
             {
                 return NotFound();
             }
 
-            _context.PizzaSizes.Remove(pizzaSize);
+            _context.PizzaDoughTypes.Remove(pizzaDoughType);
             await _context.SaveChangesAsync();
 
-            return pizzaSize;
+            return pizzaDoughType;
         }
 
-        private bool PizzaSizeExists(int id)
+        private bool PizzaDoughTypeExists(int id)
         {
-            return _context.PizzaSizes.Any(e => e.Id == id);
+            return _context.PizzaDoughTypes.Any(e => e.Id == id);
         }
     }
 }

@@ -11,48 +11,48 @@ namespace NetFood.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaSizesController : ControllerBase
+    public class AdmininstratorsController : ControllerBase
     {
         private readonly netFoodDbContext _context;
 
-        public PizzaSizesController(netFoodDbContext context)
+        public AdmininstratorsController(netFoodDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/PizzaSizes
+        // GET: api/Admininstrators
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaSize>>> GetPizzaSizes()
+        public async Task<ActionResult<IEnumerable<Admininstrator>>> GetAdmininstrators()
         {
-            return await _context.PizzaSizes.ToListAsync();
+            return await _context.Admininstrators.ToListAsync();
         }
 
-        // GET: api/PizzaSizes/5
+        // GET: api/Admininstrators/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaSize>> GetPizzaSize(int id)
+        public async Task<ActionResult<Admininstrator>> GetAdmininstrator(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
+            var admininstrator = await _context.Admininstrators.FindAsync(id);
 
-            if (pizzaSize == null)
+            if (admininstrator == null)
             {
                 return NotFound();
             }
 
-            return pizzaSize;
+            return admininstrator;
         }
 
-        // PUT: api/PizzaSizes/5
+        // PUT: api/Admininstrators/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzaSize(int id, PizzaSize pizzaSize)
+        public async Task<IActionResult> PutAdmininstrator(int id, Admininstrator admininstrator)
         {
-            if (id != pizzaSize.Id)
+            if (id != admininstrator.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizzaSize).State = EntityState.Modified;
+            _context.Entry(admininstrator).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NetFood.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaSizeExists(id))
+                if (!AdmininstratorExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/PizzaSizes
+        // POST: api/Admininstrators
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PizzaSize>> PostPizzaSize(PizzaSize pizzaSize)
+        public async Task<ActionResult<Admininstrator>> PostAdmininstrator(Admininstrator admininstrator)
         {
-            _context.PizzaSizes.Add(pizzaSize);
+            _context.Admininstrators.Add(admininstrator);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaSize", new { id = pizzaSize.Id }, pizzaSize);
+            return CreatedAtAction("GetAdmininstrator", new { id = admininstrator.Id }, admininstrator);
         }
 
-        // DELETE: api/PizzaSizes/5
+        // DELETE: api/Admininstrators/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PizzaSize>> DeletePizzaSize(int id)
+        public async Task<ActionResult<Admininstrator>> DeleteAdmininstrator(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
-            if (pizzaSize == null)
+            var admininstrator = await _context.Admininstrators.FindAsync(id);
+            if (admininstrator == null)
             {
                 return NotFound();
             }
 
-            _context.PizzaSizes.Remove(pizzaSize);
+            _context.Admininstrators.Remove(admininstrator);
             await _context.SaveChangesAsync();
 
-            return pizzaSize;
+            return admininstrator;
         }
 
-        private bool PizzaSizeExists(int id)
+        private bool AdmininstratorExists(int id)
         {
-            return _context.PizzaSizes.Any(e => e.Id == id);
+            return _context.Admininstrators.Any(e => e.Id == id);
         }
     }
 }

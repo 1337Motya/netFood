@@ -11,48 +11,48 @@ namespace NetFood.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PizzaSizesController : ControllerBase
+    public class BundlesController : ControllerBase
     {
         private readonly netFoodDbContext _context;
 
-        public PizzaSizesController(netFoodDbContext context)
+        public BundlesController(netFoodDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/PizzaSizes
+        // GET: api/Bundles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PizzaSize>>> GetPizzaSizes()
+        public async Task<ActionResult<IEnumerable<Bundle>>> GetBundles()
         {
-            return await _context.PizzaSizes.ToListAsync();
+            return await _context.Bundles.ToListAsync();
         }
 
-        // GET: api/PizzaSizes/5
+        // GET: api/Bundles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PizzaSize>> GetPizzaSize(int id)
+        public async Task<ActionResult<Bundle>> GetBundle(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
+            var bundle = await _context.Bundles.FindAsync(id);
 
-            if (pizzaSize == null)
+            if (bundle == null)
             {
                 return NotFound();
             }
 
-            return pizzaSize;
+            return bundle;
         }
 
-        // PUT: api/PizzaSizes/5
+        // PUT: api/Bundles/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPizzaSize(int id, PizzaSize pizzaSize)
+        public async Task<IActionResult> PutBundle(int id, Bundle bundle)
         {
-            if (id != pizzaSize.Id)
+            if (id != bundle.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(pizzaSize).State = EntityState.Modified;
+            _context.Entry(bundle).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace NetFood.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PizzaSizeExists(id))
+                if (!BundleExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/PizzaSizes
+        // POST: api/Bundles
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<PizzaSize>> PostPizzaSize(PizzaSize pizzaSize)
+        public async Task<ActionResult<Bundle>> PostBundle(Bundle bundle)
         {
-            _context.PizzaSizes.Add(pizzaSize);
+            _context.Bundles.Add(bundle);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPizzaSize", new { id = pizzaSize.Id }, pizzaSize);
+            return CreatedAtAction("GetBundle", new { id = bundle.Id }, bundle);
         }
 
-        // DELETE: api/PizzaSizes/5
+        // DELETE: api/Bundles/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PizzaSize>> DeletePizzaSize(int id)
+        public async Task<ActionResult<Bundle>> DeleteBundle(int id)
         {
-            var pizzaSize = await _context.PizzaSizes.FindAsync(id);
-            if (pizzaSize == null)
+            var bundle = await _context.Bundles.FindAsync(id);
+            if (bundle == null)
             {
                 return NotFound();
             }
 
-            _context.PizzaSizes.Remove(pizzaSize);
+            _context.Bundles.Remove(bundle);
             await _context.SaveChangesAsync();
 
-            return pizzaSize;
+            return bundle;
         }
 
-        private bool PizzaSizeExists(int id)
+        private bool BundleExists(int id)
         {
-            return _context.PizzaSizes.Any(e => e.Id == id);
+            return _context.Bundles.Any(e => e.Id == id);
         }
     }
 }

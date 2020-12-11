@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sP8WQrWzqNiPw3KufRutk2T5USKNhFrmpZrarPAuIE4ARvWSauZx9HrOX2bupJV94BoT/GDPPRt8vCLqoNEQNw==",
+  "dgSpecHash": "nWnFsOQpUnXSPRG5uSUtV8n7lpsLLCxc+rffafIuDfZ+GY08z81eoHr/Li0tfj4pBrTqrfE7iQZJXAjRLcZFzg==",
   "success": true,
-  "projectFilePath": "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
+  "projectFilePath": "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matve\\.nuget\\packages\\bricelam.entityframeworkcore.pluralizer\\1.0.0\\bricelam.entityframeworkcore.pluralizer.1.0.0.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

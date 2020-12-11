@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj": {}
+    "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj": {}
   },
   "projects": {
-    "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj": {
+    "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
+        "projectUniqueName": "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
         "projectName": "NetFood",
-        "projectPath": "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
+        "projectPath": "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
         "packagesPath": "C:\\Users\\matve\\.nuget\\packages\\",
-        "outputPath": "F:\\netFood\\netFood\\backend\\NetFood\\NetFood\\obj\\",
+        "outputPath": "D:\\netFood\\backend\\NetFood\\NetFood\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matve\\AppData\\Roaming\\NuGet\\NuGet.Config",
