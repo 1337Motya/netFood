@@ -34,6 +34,8 @@ function Cart() {
     dispatch(decCartItemAmount(id));
   };
 
+
+
   return (
     <div className="container container--cart">
       {totalCount ? (
@@ -116,14 +118,17 @@ function Cart() {
             <div className="content__items">
               {addedPizzas.map((obj) => (
                 <CartItem
+                  volume={obj.volume}
+                  description={obj.description}
                   key={obj.id}
+                  cartId={obj.cartId}
                   id={obj.id}
                   name={obj.name}
                   imageUrl={obj.imageUrl}
                   type={obj.type}
                   size={obj.size}
-                  totalPrice={items[obj.id].totalPrice}
-                  totalCount={items[obj.id].items.length}
+                  totalPrice={items[obj.cartId].totalPrice}
+                  totalCount={items[obj.cartId].items.length}
                   onRemove={onRemoveItem}
                   onInc={onIncItem}
                   onDec={onDecItem}
@@ -137,7 +142,7 @@ function Cart() {
                 Всего позиций: <b>{totalCount} шт.</b>
               </span>
               <span>
-                Сумма заказа: <b>{totalPrice} р.</b>
+                Сумма заказа: <b>{totalPrice.toFixed(2)} р.</b>
               </span>
             </div>
             <div className="cart__bottom-buttons">

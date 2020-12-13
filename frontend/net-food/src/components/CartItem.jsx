@@ -3,6 +3,9 @@ import Button from "./Button";
 
 function CartItem({
   id,
+  volume,
+  description,
+  cartId,
   name,
   imageUrl,
   type,
@@ -14,33 +17,48 @@ function CartItem({
   onDec,
 }) {
   const handleRemove = () => {
-    onRemove(id);
+    onRemove(cartId);
   };
 
   const handleIncItem = () => {
-    onInc(id);
+    onInc(cartId);
   };
 
   const handleDecItem = () => {
-    onDec(id);
+    onDec(cartId);
   };
-  return (
-    <div className="cart__item">
-      <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src={imageUrl}
-          alt="Pizza"
-        />
-      </div>
-      <div className="cart__item-info">
-        <h3>{name}</h3>
+
+  const handleDescription = () => {
+    console.log(volume);
+    if (size !== undefined && type !== undefined) {
+      return (
         <p>
           {type} тесто, {size} см.
         </p>
+      ); 
+    } else if (volume !== undefined) {
+      return (
+        <p>
+          {volume} л.
+        </p>
+      );
+    }
+  };
+
+  return (
+    <div className="cart__item">
+      <div className="cart__item-img">
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+      </div>
+      <div className="cart__item-info">
+        <h3>{name}</h3>
+        {handleDescription()}
       </div>
       <div className="cart__item-count">
-        <div onClick={handleDecItem} className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={handleDecItem}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <svg
             width="10"
             height="10"
@@ -59,7 +77,10 @@ function CartItem({
           </svg>
         </div>
         <b>{totalCount}</b>
-        <div onClick={handleIncItem} className="button button--outline button--circle cart__item-count-plus">
+        <div
+          onClick={handleIncItem}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <svg
             width="10"
             height="10"
@@ -79,7 +100,7 @@ function CartItem({
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{totalPrice} ₽</b>
+        <b>{totalPrice.toFixed(2)} р.</b>
       </div>
       <div className="cart__item-remove">
         <Button
