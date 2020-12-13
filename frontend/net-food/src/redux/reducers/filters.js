@@ -1,7 +1,7 @@
 const initialState = {
   category: "pizzas",
   sortBy: {
-    type: "popular",
+    type: "name",
     order: "desc",
   },
 };
