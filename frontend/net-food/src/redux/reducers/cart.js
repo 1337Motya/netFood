@@ -7,7 +7,6 @@ const initialState = {
 const getTotalPrice = (arr) => arr.reduce((sum, obj) => obj.price + sum, 0);
 
 const _get = (obj, path) => {
-  console.log(obj, path);
   const [firstKey, ...keys] = path.split(".");
   return keys.reduce((val, key) => {
     return val[key];
