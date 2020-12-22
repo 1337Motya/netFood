@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NetFood.Models;
 using Microsoft.EntityFrameworkCore;
+using NetFood.Utils;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace NetFood
 {
@@ -32,22 +36,46 @@ namespace NetFood
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:3000",
-                                                          "http://www.contoso.com")
-                                                            .AllowAnyHeader()
-                                                            .AllowAnyMethod(); ;
-                                  });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(name: MyAllowSpecificOrigins,
+            //                      builder =>
+            //                      {
+            //                          builder.WithOrigins("http://localhost:3000",
+            //                                              "http://www.contoso.com")
+            //                                                .AllowAnyHeader()
+            //                                                .AllowAnyMethod(); ;
+            //                      });
+            //});
 
             services.AddControllers();
 
             services.AddDbContext<netFoodDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("netFoodDb")));
+
+            var jwtSection = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSection);
+
+            var appSetting = jwtSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(appSetting.SecretKey);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = true;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -66,6 +94,8 @@ namespace NetFood
 
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

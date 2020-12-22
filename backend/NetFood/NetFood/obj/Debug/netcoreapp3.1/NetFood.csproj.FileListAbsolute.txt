@@ -304,7 +304,6 @@ D:\netFood\backend\NetFood\NetFood\bin\Debug\netcoreapp3.1\runtimes\win-x86\nati
 D:\netFood\backend\NetFood\NetFood\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\netFood\backend\NetFood\NetFood\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\netFood\backend\NetFood\NetFood\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.csprojAssemblyReference.cache
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.AssemblyInfoInputs.cache
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.AssemblyInfo.cs
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.csproj.CoreCompileInputs.cache
@@ -318,3 +317,5 @@ D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.csproj.CopyCo
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.dll
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.pdb
 D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.genruntimeconfig.cache
+D:\netFood\backend\NetFood\NetFood\obj\Debug\netcoreapp3.1\NetFood.csprojAssemblyReference.cache
+D:\netFood\backend\NetFood\NetFood\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll

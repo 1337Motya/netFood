@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,18 +21,16 @@ namespace NetFood.Controllers
             _context = context;
         }
 
-        // GET: api/Pizzas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pizza>>> GetPizzas()
         {
-            return await _context.Pizzas.Include(p => p.PizzaDoughTypes).Include(p => p.PizzaSizes).ToListAsync();
+            return await _context.Pizzas.Include(p => p.PizzaSizes).Include(p => p.PizzaDoughTypes).ToListAsync();
         }
 
-        // GET: api/Pizzas/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Pizza>> GetPizza(int id)
         {
-            var pizza = await _context.Pizzas.Include(p => p.PizzaDoughTypes).Include(p => p.PizzaSizes).Where(i => i.Id == id).FirstOrDefaultAsync();
+            var pizza = await _context.Pizzas.FindAsync(id);
 
             if (pizza == null)
             {
@@ -41,9 +40,6 @@ namespace NetFood.Controllers
             return pizza;
         }
 
-        // PUT: api/Pizzas/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPizza(int id, Pizza pizza)
         {
@@ -73,9 +69,6 @@ namespace NetFood.Controllers
             return NoContent();
         }
 
-        // POST: api/Pizzas
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Pizza>> PostPizza(Pizza pizza)
         {
@@ -85,11 +78,10 @@ namespace NetFood.Controllers
             return CreatedAtAction("GetPizza", new { id = pizza.Id }, pizza);
         }
 
-        // DELETE: api/Pizzas/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Pizza>> DeletePizza(int id)
         {
-            var pizza = await _context.Pizzas.Include(p => p.PizzaDoughTypes).Include(p => p.PizzaSizes).Where(i => i.Id == id).FirstOrDefaultAsync();
+            var pizza = await _context.Pizzas.FindAsync(id);
             if (pizza == null)
             {
                 return NotFound();

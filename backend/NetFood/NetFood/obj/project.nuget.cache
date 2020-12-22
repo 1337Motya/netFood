@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "nWnFsOQpUnXSPRG5uSUtV8n7lpsLLCxc+rffafIuDfZ+GY08z81eoHr/Li0tfj4pBrTqrfE7iQZJXAjRLcZFzg==",
+  "dgSpecHash": "yRQz6T6CLc2Mhvl/6PaDCwkgQLpmwuIgbt761TROv3lwV3a6SVaphcI9TE3W6ZRq4nP6Srb4ODpldiykayx/cA==",
   "success": true,
   "projectFilePath": "D:\\netFood\\backend\\NetFood\\NetFood\\NetFood.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matve\\.nuget\\packages\\bricelam.entityframeworkcore.pluralizer\\1.0.0\\bricelam.entityframeworkcore.pluralizer.1.0.0.nupkg.sha512",
+    "C:\\Users\\matve\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.10\\microsoft.aspnetcore.authentication.jwtbearer.3.1.10.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.10\\microsoft.aspnetcore.jsonpatch.3.1.10.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.10\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.10.nupkg.sha512",

@@ -11,7 +11,7 @@ namespace NetFood.Models
             Desserts = new HashSet<Dessert>();
             Drinks = new HashSet<Drink>();
             OrderItems = new HashSet<OrderItem>();
-            Pizzas = new HashSet<Pizza>();
+            PizzaOrders = new HashSet<PizzaOrder>();
             Snacks = new HashSet<Snack>();
         }
 
@@ -22,7 +22,7 @@ namespace NetFood.Models
         public virtual ICollection<Dessert> Desserts { get; set; }
         public virtual ICollection<Drink> Drinks { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
-        public virtual ICollection<Pizza> Pizzas { get; set; }
+        public virtual ICollection<PizzaOrder> PizzaOrders { get; set; }
         public virtual ICollection<Snack> Snacks { get; set; }
     }
 }

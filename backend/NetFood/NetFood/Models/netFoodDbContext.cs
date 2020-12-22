@@ -15,39 +15,29 @@ namespace NetFood.Models
         {
         }
 
-        public virtual DbSet<Admininstrator> Admininstrators { get; set; }
         public virtual DbSet<Bundle> Bundles { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Dessert> Desserts { get; set; }
         public virtual DbSet<Drink> Drinks { get; set; }
-        public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
         public virtual DbSet<Pizza> Pizzas { get; set; }
         public virtual DbSet<PizzaDoughType> PizzaDoughTypes { get; set; }
+        public virtual DbSet<PizzaOrder> PizzaOrders { get; set; }
         public virtual DbSet<PizzaSize> PizzaSizes { get; set; }
         public virtual DbSet<Snack> Snacks { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Name=netFoodDb");
+                optionsBuilder.UseSqlServer("name=netFoodDb");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Admininstrator>(entity =>
-            {
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Admininstrators)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Admininst__UserI__45F365D3");
-            });
-
             modelBuilder.Entity<Bundle>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(255);
@@ -69,10 +59,10 @@ namespace NetFood.Models
                     .HasForeignKey(d => d.DrinkId)
                     .HasConstraintName("FK__Bundles__DrinkId__3A81B327");
 
-                entity.HasOne(d => d.Pizza)
+                entity.HasOne(d => d.PizzaOrder)
                     .WithMany(p => p.Bundles)
-                    .HasForeignKey(d => d.PizzaId)
-                    .HasConstraintName("FK__Bundles__PizzaId__38996AB5");
+                    .HasForeignKey(d => d.PizzaOrderId)
+                    .HasConstraintName("FK_Bundles_PizzaOrders");
 
                 entity.HasOne(d => d.Snack)
                     .WithMany(p => p.Bundles)
@@ -113,14 +103,6 @@ namespace NetFood.Models
                     .HasConstraintName("FK__Drinks__Category__34C8D9D1");
             });
 
-            modelBuilder.Entity<Manager>(entity =>
-            {
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Managers)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Managers__UserId__48CFD27E");
-            });
-
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.Address).HasMaxLength(255);
@@ -148,11 +130,6 @@ namespace NetFood.Models
                 entity.Property(e => e.Description).HasMaxLength(255);
 
                 entity.Property(e => e.Name).HasMaxLength(255);
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Pizzas)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Pizzas__Category__267ABA7A");
             });
 
             modelBuilder.Entity<PizzaDoughType>(entity =>
@@ -163,6 +140,33 @@ namespace NetFood.Models
                     .WithMany(p => p.PizzaDoughTypes)
                     .HasForeignKey(d => d.Pizza)
                     .HasConstraintName("FK__PizzaDoug__Pizza__2C3393D0");
+            });
+
+            modelBuilder.Entity<PizzaOrder>(entity =>
+            {
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.PizzaOrders)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__PizzaOrde__Categ__5FB337D6");
+
+                //entity.HasOne(d => d.PizzaDoughType)
+                //    .WithMany(p => p.PizzaOrders)
+                //    .HasForeignKey(d => d.PizzaDoughTypeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__PizzaOrde__Pizza__5EBF139D");
+
+                //entity.HasOne(d => d.Pizza)
+                //    //.WithMany(p => p.PizzaOrders)
+                //    //.HasForeignKey(d => d.PizzaId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__PizzaOrde__Pizza__5CD6CB2B");
+
+                //entity.HasOne(d => d.PizzaSize)
+                //    .WithMany(p => p.PizzaOrders)
+                //    .HasForeignKey(d => d.PizzaSizeId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__PizzaOrde__Pizza__5DCAEF64");
             });
 
             modelBuilder.Entity<PizzaSize>(entity =>
@@ -187,16 +191,6 @@ namespace NetFood.Models
                     .WithMany(p => p.Snacks)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK__Snacks__Category__2F10007B");
-            });
-
-            modelBuilder.Entity<Staff>(entity =>
-            {
-                entity.ToTable("Staff");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Staffs)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Staff__UserId__4BAC3F29");
             });
 
             modelBuilder.Entity<User>(entity =>

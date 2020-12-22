@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NetFood.Models
 {
-    public partial class Snack
+    public partial class Snack : IProduct
     {
         public Snack()
         {

@@ -22,9 +22,54 @@ namespace NetFood.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public ActionResult<IEnumerable<OrderInfo>> GetOrders()
         {
-            return await _context.Orders.ToListAsync();
+            var orders = _context.Orders.Include(i => i.OrderItems).ToList();
+            List<OrderInfo> orderInfos = new List<OrderInfo>();
+            foreach (var order in orders)
+            {
+                List<IProduct> products = new List<IProduct>();
+                var orderItems = order.OrderItems;
+                foreach (var item in orderItems)
+                {
+                    switch (item.CategoryId)
+                    {
+                        case 1:
+                            PizzaOrder pizza = _context.PizzaOrders.Include(i => i.Pizza)
+                                .Include(i => i.PizzaDoughType)
+                                .Include(i => i.PizzaSize)
+                                .Where(i => i.Id == item.ProductId).First();
+                            products.Add(new PizzaDto(pizza, item.Amount));
+                            break;
+                        case 2:
+                            Drink drink = _context.Drinks.Where(i => i.Id == item.ProductId).First();
+                            products.Add(new DrinkDto(drink, item.Amount));
+                            break;
+                        case 3:
+                            Snack snack = _context.Snacks.Where(i => i.Id == item.ProductId).First();
+                            products.Add(new SnackDto(snack, item.Amount));
+                            break;
+                        case 4:
+                            Dessert dessert = _context.Desserts.Where(i => i.Id == item.ProductId).First();
+                            products.Add(new DessertDto(dessert, item.Amount));
+                            break;
+                        case 5:
+                            products.Add(_context.Bundles.Where(i => i.Id == item.ProductId).First());
+                            break;
+                    }
+                }
+                order.OrderItems = null;
+                orderInfos.Add(
+                        new OrderInfo()
+                        {
+                            order = order,
+                            products = products
+                        }
+                        );
+            }
+            return orderInfos.OrderByDescending(i => i.order.Id).ToList();
+            //return await _context.Orders.Include(o => o.OrderItems).ToListAsync();
         }
 
         // GET: api/Orders/5

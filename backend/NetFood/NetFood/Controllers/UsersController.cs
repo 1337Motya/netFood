@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using NetFood.Models;
+using NetFood.Utils;
 
 namespace NetFood.Controllers
 {
@@ -14,10 +20,41 @@ namespace NetFood.Controllers
     public class UsersController : ControllerBase
     {
         private readonly netFoodDbContext _context;
-
-        public UsersController(netFoodDbContext context)
+        private readonly JWTSettings _jwtSettings;
+        public UsersController(netFoodDbContext context, IOptions<JWTSettings> settings)
         {
             _context = context;
+            _jwtSettings = settings.Value;
+        }
+        [HttpPost("Login")]
+        public ActionResult<UserWithToken> Login([FromBody] User user)
+        {
+            user = _context.Users
+                .Where(i => i.Username == user.Username
+            && i.Password == user.Password)
+                .FirstOrDefault();
+            
+            if (user == null)
+            {
+                return NotFound();
+            }
+            UserWithToken userWithToken = new UserWithToken(user);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Email)
+                }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            userWithToken.Token = tokenHandler.WriteToken(token);
+
+            return userWithToken;
         }
 
         // GET: api/Users
