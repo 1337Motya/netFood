@@ -1,0 +1,33 @@
+.link-block {
+    margin-bottom: 20px;
+}
+
+.volume-block {
+    margin-bottom: 20px;
+}
+
+.add-block {
+    height: 30px;
+}
+
+.order {
+    margin: auto;
+    margin-bottom: 50px;
+    border: 3px gray;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 90%;
+    &__info {
+        font-size: 22px;
+    }
+
+    &__items {
+        max-width: 700px;
+        margin: auto;
+    }
+
+}
+
+.order-form {
+    margin-top: 30px;
+}
