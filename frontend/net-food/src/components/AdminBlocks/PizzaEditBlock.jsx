@@ -1,6 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 import Button from "../Button";
+import { ReactComponent as PlusIcon } from '../../assets/img/plus.svg';
+import { ReactComponent as MinusIcon } from '../../assets/img/minus.svg';
+import {ReactComponent as ReplaceIcon} from '../../assets/img/replace.svg';
 
 function PizzaEditBlock({
   id,
@@ -9,94 +13,220 @@ function PizzaEditBlock({
   description,
   imageUrl,
   onDelete,
+  onEdit,
   pizzaDoughTypes,
-  pizzaSizes
+  pizzaSizes,
+  onEditSize,
+  onAddSize,
+  onDeleteSize,
+  onEditDough,
+  onAddDough,
+  onDeleteDough,
 }) {
-
-  console.log(pizzaDoughTypes);
+  pizzaSizes.sort((a, b) => a.size > b.size ? 1 : -1);
+  const [nameEdit, setName] = React.useState(name);
+  const [descriptionEdit, setDescription] = React.useState(description);
+  const [imageUrlEdit, setImageUrl] = React.useState(imageUrl);
+  const [newSize, addSize] = React.useState();
+  const [newDoughType, setNewDoughType] = React.useState('');
+  const [newSizePrice, addSizePrice] = React.useState();
+  const [editSize, setEditSize] = React.useState(pizzaSizes[0].size);
+  const [editSizePrice, setEditSizePrice] = React.useState(pizzaSizes[0].price);
+  const [editDoughType, setEditDoughType] = React.useState(pizzaDoughTypes[0].doughType);
   const availableTypes = pizzaDoughTypes.map(types => types.doughType);
-  console.log(pizzaSizes);
   const availableSizes = pizzaSizes.map(sizes => sizes.size);
-  const prices = pizzaSizes.map(sizes => sizes.price);
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
 
   const onSelectType = (index) => {
     setActiveType(index);
+    setEditDoughType(pizzaDoughTypes[index].doughType);
   };
 
   const onSelectSize = (index) => {
     setActiveSize(index);
+    setEditSize(pizzaSizes[index].size);
+    setEditSizePrice(pizzaSizes[index].price);
   };
 
   const deletePizza = () => {
     onDelete("pizzas", id);
   };
 
+  const handleSubmit = () => {
+    var newItem = {
+      id: id,
+      name: nameEdit,
+      description: descriptionEdit,
+      ImageUrl: imageUrl,
+    };
+    onEdit("pizzas", newItem, id);
+  };
+
+  const createPizzaSize = () => {
+    var size = {
+      pizza: id,
+      size: newSize,
+      price: newSizePrice
+    };
+    onAddSize("pizzas", size);
+  };
+
+  const createPizzaDough = () => {
+    var type = {
+      pizza: id,
+      doughType: newDoughType,
+    };
+    onAddDough("pizzas", type);
+  };
+
+
+  const editPizzaSize = () => {
+    var size = {
+      id: pizzaSizes[activeSize].id,
+      pizza: id,
+      size: editSize,
+      price: editSizePrice
+    };
+    onEditSize("pizzas", size);
+  };
+
+  const deletePizzaSize = () => {
+    onDeleteSize("pizzas", pizzaSizes[activeSize].id);
+  };
+
+  const editPizzaDough = () => {
+    var type = {
+      id: pizzaDoughTypes[activeType].id,
+      pizza: id,
+      doughType: editDoughType,
+    };
+    onEditDough("pizzas", type);
+  };
+
+  const deletePizzaDough = () => {
+    onDeleteDough("pizzas", pizzaDoughTypes[activeType].i);
+  };
+
   return (
     <div className="pizza-block">
       <div className="cart__item-remove">
-        <Button
-          onClick={deletePizza}
+        <Button onClick={deletePizza}
           className="button button--outline button--circle"
         >
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5.92001 3.84V5.76V8.64C5.92001 9.17016 5.49017 9.6 4.96001 9.6C4.42985 9.6 4.00001 9.17016 4.00001 8.64L4 5.76L4.00001 3.84V0.96C4.00001 0.42984 4.42985 0 4.96001 0C5.49017 0 5.92001 0.42984 5.92001 0.96V3.84Z"
-              fill="#EB5A1E"
-            />
-            <path
-              d="M5.75998 5.92001L3.83998 5.92001L0.959977 5.92001C0.429817 5.92001 -2.29533e-05 5.49017 -2.29301e-05 4.96001C-2.2907e-05 4.42985 0.429817 4.00001 0.959977 4.00001L3.83998 4L5.75998 4.00001L8.63998 4.00001C9.17014 4.00001 9.59998 4.42985 9.59998 4.96001C9.59998 5.49017 9.17014 5.92001 8.63998 5.92001L5.75998 5.92001Z"
-              fill="#EB5A1E"
-            />
-          </svg>
+          <PlusIcon />
         </Button>
       </div>
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{name}</h4>
-      <span className="pizza-block__description">{description}</span>
+      <div className="link-block">
+        <input type="text" className="item-input" placeholder="Название" value={imageUrlEdit} onChange={(e) => setImageUrl(e.target.value)} />
+      </div>
+      <div>
+        <textarea className="item-edit-textarea textarea-name" placeholder="Имя" type="text" value={nameEdit} onChange={(e) => setName(e.target.value)} />
+      </div>
+      <div>
+        <textarea className="item-edit-textarea textarea-description" placeholder="Описание" type="text" value={descriptionEdit} onChange={(e) => setDescription(e.target.value)} />
+      </div>
       <div className="pizza-block__selector">
-      <ul>
-        {availableTypes.map((type, index) => (
-          <li
-            key={type}
-            onClick={() => onSelectType(index)}
-            className={classNames({
-              active: activeType === index
-            })}
-          >
-            {type}
-          </li>
-        ))}
-      </ul>
-      <ul>
-        {availableSizes.map((size, index) => (
-          <li
-            key={size}
-            onClick={() => onSelectSize(index)}
-            className={classNames({
-              active: activeSize === index
-            })}
-          >
-            {size} см.
-          </li>
-        ))}
-      </ul>
-    </div>
+        <ul>
+          {availableTypes.map((type, index) => (
+            <li
+              key={type}
+              onClick={() => onSelectType(index)}
+              className={classNames({
+                active: activeType === index
+              })}
+            >
+              {type}
+            </li>
+          ))}
+        </ul>
+        <ul>
+          {availableSizes.map((size, index) => (
+            <li
+              key={size}
+              onClick={() => onSelectSize(index)}
+              className={classNames({
+                active: activeSize === index
+              })}
+            >
+              {size} см.
+            </li>
+          ))}
+        </ul>
+      </div>
+      <h3>Редактироваь опции</h3>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{prices[activeSize]} р.</div>
-        <Button className="button--add" outline>
+      <div onClick={deletePizzaDough}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
+          <MinusIcon />
+        </div>
+        <input className="item-edit-input pizza-option-input" value={editDoughType} type="text" placeholder="тесто" onChange={(e) => setEditDoughType(e.target.value)} />
+        <div onClick={editPizzaDough}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
+          <ReplaceIcon />
+        </div>
+      </div>
+      <div className="pizza-block__bottom">
+      <div onClick={deletePizzaSize}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
+          <MinusIcon />
+        </div>
+        <input className="item-edit-input input-size-edit" value={editSize} type="number" placeholder="0" onChange={(e) => setEditSize(e.target.value)} />
+        <b>см.</b>
+        <input className="item-edit-input input-size-edit" value={editSizePrice} type="number" placeholder="0" onChange={(e) => setEditSizePrice(e.target.value)} />
+        <b>р.</b>
+        <div onClick={editPizzaSize}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
+          <ReplaceIcon />
+        </div>
+      </div>
+      <h3>Добавить опции</h3>
+      <div className="pizza-block__bottom">
+        <input className="item-edit-input pizza-option-input" value={newDoughType} type="text" placeholder="тесто" onChange={(e) => setNewDoughType(e.target.value)} />
+        <div onClick={createPizzaDough}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
+          <PlusIcon />
+        </div>
+      </div>
+      <div className="pizza-block__bottom">
+        <input className="item-edit-input input-size-edit" value={newSize} type="number" placeholder="0" onChange={(e) => addSize(e.target.value)} />
+        <b>см.</b>
+        <input className="item-edit-input input-size-edit" value={newSizePrice} type="number" placeholder="0" onChange={(e) => addSizePrice(e.target.value)} />
+        <b>р.</b>
+        <div onClick={createPizzaSize}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
+          <PlusIcon />
+        </div>
+      </div>
+      <div className="pizza-block__bottom">
+        <div className="pizza-block__price"></div>
+        <Button onClick={handleSubmit} className="button--add" outline>
           <span>Сохранить</span>
         </Button>
       </div>
     </div>
   );
 }
+
+PizzaEditBlock.propTypes = {
+  name: PropTypes.string,
+  imageUrl: PropTypes.string,
+  types: PropTypes.arrayOf(PropTypes.number),
+  sizes: PropTypes.arrayOf(PropTypes.number),
+};
+
+PizzaEditBlock.defaultProps = {
+  name: "Название пиццы",
+  imageUrl: "",
+  pizzaDoughTypes: [{ id: 1, doughType: 'традиционное' }],
+  pizzaSizes: [{ id: 1, size: 26, price: 14 }],
+};
 
 export default PizzaEditBlock;
