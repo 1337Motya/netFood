@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCategory, setSortBy } from "../redux/actions/filters";
 import { fetchPizzas } from "../redux/actions/pizzas";
 import { addPizzaToCart } from "../redux/actions/cart";
+import {emptyCartImage} from "../assets/img/empty-cart.png"
 
 function Home() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function Home() {
 
   React.useEffect(() => {
     dispatch(fetchPizzas(category, sortBy));
-  }, [category, sortBy]);
+  }, [category, dispatch, sortBy]);
 
   const onSelectCategory = (index) => {
     dispatch(setCategory(index));
@@ -36,22 +37,31 @@ function Home() {
     dispatch(addPizzaToCart(obj));
   };
 
+  const showLoadingBlocks = (amount) => {
+    return Array(amount)
+      .fill(0)
+      .map((_, index) => <LoadingBlock key={index} />);
+  };
+
+  const showEmptyCart = () => {
+    return (
+      <div className="cart cart--empty">
+        <h2>
+          Здесь пока ничего нет <span role="img" aria-label="smile">🙃</span>
+        </h2>
+        <span>
+          Но очень скоро появится
+        </span>
+        <img src={emptyCartImage} alt="Empty cart" />
+      </div>
+    );
+  };
+
   function handleCategory(category, items) {
     if (!isLoaded) {
-      return Array(items.length)
-        .fill(0)
-        .map((_, index) => <LoadingBlock key={index} />);
-    }
-    if (items.length === 0) {
-      return <div className="cart cart--empty">
-      <h2>
-        Здесь пока ничего нет <i>🙃</i>
-      </h2>
-      <p>
-        Но очень скоро появится
-      </p>
-      {/* <img src={emptyCartImage} alt="Empty cart" /> */}
-    </div>
+      showLoadingBlocks(items.length);
+    } else if (items.length === 0) {
+      showEmptyCart();
     }
     switch (category) {
       case "pizzas":
@@ -87,6 +97,8 @@ function Home() {
             {...obj}
           />
         ));
+      default:
+        return <h2>Не реализовано</h2>
     }
   }
 
@@ -101,17 +113,17 @@ function Home() {
             { name: "Закуски", apiname: "snacks" },
             { name: "Десерты", apiname: "desserts" },
             { name: "Напитки", apiname: "drinks" },
-            { name: "Комбо", apiname: "bundles" },
+            // { name: "Комбо", apiname: "bundles" },
           ]}
         />
-        <SortPopup
+        {/* <SortPopup
           onClickSort={onSelectSortType}
           sortType={sortBy.type}
           items={[
             { name: "алфавиту", type: "name", order: "asc" },
             { name: "цене", type: "price", order: "desc" }
           ]}
-        />
+        /> */}
       </div>
       <div className="content__items">{handleCategory(category, items)}</div>
     </div>
